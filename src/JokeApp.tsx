@@ -1,6 +1,6 @@
 import { Typography, TextField, MenuItem } from "@material-ui/core";
 import { useState } from "react";
-import { isSingleJoke } from "./api/jokes/types";
+import { isSingleJoke, NO_RESULTS_ERROR_CODE } from "./api/jokes/types";
 import { useJokeInfo } from "./api/jokes/useJokeInfo";
 import { useJokeSearch } from "./api/jokes/useJokeSearch";
 import useDebounce from "./api/utils";
@@ -51,7 +51,12 @@ const JokeApp = () => {
       />
 
       <div data-testid="joke-results">
-        {jokeSearchResponse?.jokes.map((joke) => (
+        {jokeSearchResponse?.error &&
+          jokeSearchResponse.code === NO_RESULTS_ERROR_CODE && (
+            <Typography>Sorry! No matching jokes found</Typography>
+          )}
+
+        {jokeSearchResponse?.jokes?.map((joke) => (
           <div key={joke.id}>
             <Typography>Category: {joke.category}</Typography>
             <Typography>Type: {joke.type}</Typography>

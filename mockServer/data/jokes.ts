@@ -45,3 +45,4 @@ export const jokeCategories = [
   "Spooky",
   "Christmas",
 ];
+export const nonExistingJokeText = "IWillNotReturnAnyJokes";

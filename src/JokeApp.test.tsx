@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { totalJokeCount } from "../mockServer/data/jokes";
+import { nonExistingJokeText, totalJokeCount } from "../mockServer/data/jokes";
 import JokeApp from "./JokeApp";
 
 test("Displays main heading", async () => {
@@ -105,4 +105,18 @@ test("Can search jokes by text", async () => {
   ).findAllByText(/dave/i);
 
   expect(jokesContainingDave.length).toEqual(10);
+});
+
+test("When no search results are found a helpful message is displayed", async () => {
+  render(<JokeApp />);
+
+  const searchBox = await screen.findByLabelText(/Search/i);
+
+  userEvent.type(searchBox, nonExistingJokeText);
+
+  const noResultsMessage = await screen.findByText(
+    /Sorry! No matching jokes found/i
+  );
+
+  expect(noResultsMessage).toBeInTheDocument();
 });

@@ -1,9 +1,14 @@
 import { rest, RestRequest } from "msw";
-import { GetJokeInfoResponse, GetJokesResponse } from "../src/api/jokes/types";
+import {
+  GetJokeInfoResponse,
+  GetJokesResponse,
+  NO_RESULTS_ERROR_CODE,
+} from "../src/api/jokes/types";
 import {
   buildSingleJoke,
   buildTwopartJoke,
   jokeCategories,
+  nonExistingJokeText,
   totalJokeCount,
 } from "./data/jokes";
 
@@ -24,6 +29,16 @@ export const handlers = [
 
       const searchTerm = req.url.searchParams.get("contains") || "";
 
+      if (searchTerm === nonExistingJokeText) {
+        return res(
+          ctx.status(200),
+          ctx.json({
+            error: true as boolean,
+            code: NO_RESULTS_ERROR_CODE,
+          } as GetJokesResponse)
+        );
+      }
+
       return res(
         ctx.status(200),
         ctx.json({
@@ -41,7 +56,7 @@ export const handlers = [
                   delivery: searchTerm + "Funny delivery - " + i,
                 })
           ),
-        })
+        } as GetJokesResponse)
       );
     }
   ),

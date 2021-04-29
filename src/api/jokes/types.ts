@@ -34,10 +34,12 @@ export interface GetJokesParams {
   contains?: string;
 }
 
+export const NO_RESULTS_ERROR_CODE = 106;
 export interface GetJokesResponse {
   error: boolean;
-  amount: number;
-  jokes: (SingleJoke | TwopartJoke)[];
+  amount?: number;
+  code?: typeof NO_RESULTS_ERROR_CODE;
+  jokes?: (SingleJoke | TwopartJoke)[];
 }
 
 export interface GetJokeInfoResponse {
