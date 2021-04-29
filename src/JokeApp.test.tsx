@@ -92,3 +92,17 @@ test("Can filter jokes based on the category", async () => {
 
   expect(jokesWithProgrammingCategory.length).toEqual(10);
 });
+
+test("Can search jokes by text", async () => {
+  render(<JokeApp />);
+
+  const searchBox = await screen.findByLabelText(/Search/i);
+
+  userEvent.type(searchBox, "dave");
+
+  const jokesContainingDave = await within(
+    await screen.findByTestId("joke-results")
+  ).findAllByText(/dave/i);
+
+  expect(jokesContainingDave.length).toEqual(10);
+});

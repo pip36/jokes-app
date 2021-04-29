@@ -6,7 +6,11 @@ import { useJokeSearch } from "./api/jokes/useJokeSearch";
 
 const JokeApp = () => {
   const [category, setCategory] = useState("Any");
-  const { jokeSearchResponse } = useJokeSearch({ category });
+  const [searchTerm, setSearchTerm] = useState("");
+  const { jokeSearchResponse } = useJokeSearch({
+    category,
+    contains: searchTerm,
+  });
   const { jokeInfoResponse } = useJokeInfo();
 
   if (!jokeInfoResponse) return null;
@@ -33,6 +37,15 @@ const JokeApp = () => {
           </MenuItem>
         ))}
       </TextField>
+
+      <TextField
+        id="joke-search"
+        label="Search"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search for a joke..."
+        variant="outlined"
+      />
 
       <div data-testid="joke-results">
         {jokeSearchResponse?.jokes.map((joke) => (

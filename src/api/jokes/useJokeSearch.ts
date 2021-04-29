@@ -3,7 +3,7 @@ import axios from "axios";
 import { JOKE_API_BASE_URL } from "./config";
 import { GetJokesParams, GetJokesResponse } from "./types";
 
-export const useJokeSearch = ({ category }: GetJokesParams) => {
+export const useJokeSearch = ({ category, contains = "" }: GetJokesParams) => {
   const [
     jokeSearchResponse,
     setJokeSearchResponse,
@@ -15,7 +15,10 @@ export const useJokeSearch = ({ category }: GetJokesParams) => {
     (async () => {
       try {
         const r = await axios.get(
-          JOKE_API_BASE_URL + "/joke/" + category + "?amount=10&safe-mode"
+          JOKE_API_BASE_URL +
+            "/joke/" +
+            category +
+            `?amount=10&contains=${contains}&safe-mode`
         );
         isMounted && setJokeSearchResponse(r.data);
       } catch (err) {
@@ -26,7 +29,7 @@ export const useJokeSearch = ({ category }: GetJokesParams) => {
     return () => {
       isMounted = false;
     };
-  }, [category]);
+  }, [category, contains]);
 
   return { jokeSearchResponse };
 };

@@ -37,7 +37,7 @@ export const handlers = [
                 })
               : buildTwopartJoke({
                   category,
-                  setup: searchTerm + "Funny Setup - " + i,
+                  setup: "Funny Setup - " + i,
                   delivery: searchTerm + "Funny delivery - " + i,
                 })
           ),

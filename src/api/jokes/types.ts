@@ -31,6 +31,7 @@ export const isSingleJoke = (
 export interface GetJokesParams {
   amount?: number;
   category: string;
+  contains?: string;
 }
 
 export interface GetJokesResponse {
