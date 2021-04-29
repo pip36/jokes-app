@@ -22,6 +22,8 @@ export const handlers = [
         return res(ctx.status(500));
       }
 
+      const searchTerm = req.url.searchParams.get("contains") || "";
+
       return res(
         ctx.status(200),
         ctx.json({
@@ -29,11 +31,14 @@ export const handlers = [
           amount,
           jokes: new Array(amount).fill("").map((_, i) =>
             i % 2 === 0
-              ? buildSingleJoke({ category, joke: "Funny Joke - " + i })
+              ? buildSingleJoke({
+                  category,
+                  joke: searchTerm + "Funny Joke - " + i,
+                })
               : buildTwopartJoke({
                   category,
-                  setup: "Funny Setup - " + i,
-                  delivery: "Funny delivery - " + i,
+                  setup: searchTerm + "Funny Setup - " + i,
+                  delivery: searchTerm + "Funny delivery - " + i,
                 })
           ),
         })
