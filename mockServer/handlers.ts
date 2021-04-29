@@ -11,13 +11,17 @@ export const handlers = [
       }
 
       const { category } = req.params;
-      const amount = req.url.searchParams.get("amount") || "";
+      const amount = parseInt(req.url.searchParams.get("amount") || "0", 10);
+
+      if (!amount) {
+        return res(ctx.status(500));
+      }
 
       return res(
         ctx.status(200),
         ctx.json({
           error: false as boolean,
-          amount: parseInt(amount, 10),
+          amount,
           jokes: new Array(amount).fill("").map((_, i) =>
             i % 2 === 0
               ? buildSingleJoke({ category, joke: "Funny Joke - " + i })
@@ -34,4 +38,4 @@ export const handlers = [
 ];
 
 const safeModeEnabled = (req: RestRequest) =>
-  req.url.searchParams.get("safe-mode");
+  req.url.searchParams.has("safe-mode");

@@ -2,15 +2,7 @@ export interface Joke {
   id: number;
   safe: boolean;
   lang: string;
-  category:
-    | "Any"
-    | "Misc"
-    | "Programming"
-    | "Dark"
-    | "Pun"
-    | "Spooky"
-    | "Christmas"
-    | string;
+  category: string;
   flags: {
     nsfw: boolean;
     religious: boolean;
@@ -30,6 +22,15 @@ export interface TwopartJoke extends Joke {
   type: "twopart";
   setup: string;
   delivery: string;
+}
+
+export const isSingleJoke = (
+  joke: SingleJoke | TwopartJoke
+): joke is SingleJoke => joke.type === "single";
+
+export interface GetJokesParams {
+  amount?: number;
+  category: string;
 }
 
 export interface GetJokesResponse {
