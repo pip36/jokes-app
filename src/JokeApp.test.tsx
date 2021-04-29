@@ -1,11 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { totalJokeCount } from "../mockServer/data/jokes";
 import JokeApp from "./JokeApp";
 
 test("Displays main heading", async () => {
   render(<JokeApp />);
 
-  const heading = screen.getByRole("heading", { name: /Joke App/i });
+  const heading = await screen.findByRole("heading", { name: /Joke App/i });
 
   expect(heading).toBeInTheDocument();
 });
@@ -14,7 +15,7 @@ test("When application loads, 10 jokes are displayed from the 'Any' category", a
   render(<JokeApp />);
 
   const jokesWithAnyCategory = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Category: Any/i);
 
   expect(jokesWithAnyCategory.length).toEqual(10);
@@ -24,11 +25,11 @@ test("Joke's type should be displayed", async () => {
   render(<JokeApp />);
 
   const singleJokes = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Type: Single/i);
 
   const twopartJokes = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Type: Twopart/i);
 
   expect(singleJokes.length).toEqual(5);
@@ -39,7 +40,7 @@ test("Jokes of type 'single' should be displayed", async () => {
   render(<JokeApp />);
 
   const singleJokes = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Funny Joke/i);
 
   expect(singleJokes.length).toEqual(5);
@@ -49,11 +50,11 @@ test("Jokes of type 'twopart' should be displayed", async () => {
   render(<JokeApp />);
 
   const jokeSetupText = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Funny Setup/i);
 
   const jokeDeliveryText = await within(
-    screen.getByTestId("joke-results")
+    await screen.findByTestId("joke-results")
   ).findAllByText(/Funny Delivery/i);
 
   expect(jokeSetupText.length).toEqual(5);
@@ -69,4 +70,25 @@ test("Total number of jokes available on the api should be displayed", async () 
   );
 
   expect(jokeCountDisplay).toBeInTheDocument();
+});
+
+test("Can filter jokes based on the category", async () => {
+  render(<JokeApp />);
+
+  const inputDisplayingAny = await screen.findByDisplayValue("Any");
+  expect(inputDisplayingAny).toBeInTheDocument();
+
+  userEvent.click(await screen.findByLabelText(/Category/i));
+  userEvent.click(await screen.findByText(/Programming/i));
+
+  const inputDisplayingProgramming = await screen.findByDisplayValue(
+    "Programming"
+  );
+  expect(inputDisplayingProgramming).toBeInTheDocument();
+
+  const jokesWithProgrammingCategory = await within(
+    await screen.findByTestId("joke-results")
+  ).findAllByText(/Category: Programming/i);
+
+  expect(jokesWithProgrammingCategory.length).toEqual(10);
 });
