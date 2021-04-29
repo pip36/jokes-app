@@ -3,13 +3,16 @@ import { useState } from "react";
 import { isSingleJoke } from "./api/jokes/types";
 import { useJokeInfo } from "./api/jokes/useJokeInfo";
 import { useJokeSearch } from "./api/jokes/useJokeSearch";
+import useDebounce from "./api/utils";
 
 const JokeApp = () => {
   const [category, setCategory] = useState("Any");
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   const { jokeSearchResponse } = useJokeSearch({
     category,
-    contains: searchTerm,
+    contains: debouncedSearchTerm,
   });
   const { jokeInfoResponse } = useJokeInfo();
 
