@@ -1,5 +1,11 @@
+import { Typography } from "@material-ui/core";
+
 const JokeApp = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Typography variant="h1">Joke App</Typography>
+    </div>
+  );
 };
 
 export default JokeApp;

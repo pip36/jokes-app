@@ -1,4 +1,4 @@
-export type Joke = {
+export interface Joke {
   id: number;
   safe: boolean;
   lang: string;
@@ -11,9 +11,6 @@ export type Joke = {
     | "Spooky"
     | "Christmas"
     | string;
-  type: string;
-  setup: string;
-  delivery: string;
   flags: {
     nsfw: boolean;
     religious: boolean;
@@ -22,10 +19,21 @@ export type Joke = {
     sexist: boolean;
     explicit: boolean;
   };
-};
+}
 
-export type GetJokesResponse = {
+export interface SingleJoke extends Joke {
+  type: "single";
+  joke: string;
+}
+
+export interface TwopartJoke extends Joke {
+  type: "twopart";
+  setup: string;
+  delivery: string;
+}
+
+export interface GetJokesResponse {
   error: boolean;
   amount: number;
-  jokes: Joke[];
-};
+  jokes: (SingleJoke | TwopartJoke)[];
+}

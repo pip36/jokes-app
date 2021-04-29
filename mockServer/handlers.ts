@@ -1,6 +1,6 @@
 import { rest, RestRequest } from "msw";
 import { GetJokesResponse } from "../src/api/jokes/types";
-import { buildJoke } from "./data/jokes";
+import { buildSingleJoke, buildTwopartJoke } from "./data/jokes";
 
 export const handlers = [
   rest.get<any, GetJokesResponse>(
@@ -18,7 +18,15 @@ export const handlers = [
         ctx.json({
           error: false as boolean,
           amount: parseInt(amount, 10),
-          jokes: new Array(amount).fill("").map((x) => buildJoke({ category })),
+          jokes: new Array(amount).fill("").map((_, i) =>
+            i % 2 === 0
+              ? buildSingleJoke({ category, joke: "Funny Joke - " + i })
+              : buildTwopartJoke({
+                  category,
+                  setup: "Funny Setup - " + i,
+                  delivery: "Funny delivery - " + i,
+                })
+          ),
         })
       );
     }

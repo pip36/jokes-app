@@ -1,10 +1,9 @@
-import { Joke } from "../../src/api/jokes/types";
+import { Joke, SingleJoke, TwopartJoke } from "../../src/api/jokes/types";
 import faker from "faker";
 
-export const buildJoke = (overrides: Partial<Joke>): Joke => ({
+const buildJoke = (): Joke => ({
   id: faker.datatype.number(),
   category: faker.music.genre(),
-  delivery: faker.lorem.sentence(),
   flags: {
     nsfw: false,
     religious: false,
@@ -15,7 +14,23 @@ export const buildJoke = (overrides: Partial<Joke>): Joke => ({
   },
   lang: faker.address.countryCode(),
   safe: true,
+});
+
+export const buildSingleJoke = (
+  overrides: Partial<SingleJoke>
+): SingleJoke => ({
+  joke: faker.lorem.sentence(),
+  type: "single",
+  ...buildJoke(),
+  ...overrides,
+});
+
+export const buildTwopartJoke = (
+  overrides: Partial<TwopartJoke>
+): TwopartJoke => ({
   setup: faker.lorem.sentence(),
+  delivery: faker.lorem.sentence(),
   type: "twopart",
+  ...buildJoke(),
   ...overrides,
 });
