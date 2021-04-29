@@ -34,3 +34,14 @@ export const buildTwopartJoke = (
   ...buildJoke(),
   ...overrides,
 });
+
+export const totalJokeCount = 10_000;
+export const jokeCategories = [
+  "Any",
+  "Misc",
+  "Programming",
+  "Dark",
+  "Pun",
+  "Spooky",
+  "Christmas",
+];

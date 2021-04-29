@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import { totalJokeCount } from "../mockServer/data/jokes";
 import JokeApp from "./JokeApp";
 
 test("Displays main heading", async () => {
@@ -57,4 +58,15 @@ test("Jokes of type 'twopart' should be displayed", async () => {
 
   expect(jokeSetupText.length).toEqual(5);
   expect(jokeDeliveryText.length).toEqual(5);
+});
+
+test("Total number of jokes available on the api should be displayed", async () => {
+  render(<JokeApp />);
+
+  const jokeCountDisplay = await screen.findByText(
+    `Now with ${totalJokeCount} jokes!`,
+    { exact: false }
+  );
+
+  expect(jokeCountDisplay).toBeInTheDocument();
 });

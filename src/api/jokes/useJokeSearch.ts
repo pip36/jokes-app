@@ -4,9 +4,10 @@ import { JOKE_API_BASE_URL } from "./config";
 import { GetJokesParams, GetJokesResponse } from "./types";
 
 export const useJokeSearch = ({ category }: GetJokesParams) => {
-  const [jokesResponse, setJokesResponse] = useState<GetJokesResponse | null>(
-    null
-  );
+  const [
+    jokeSearchResponse,
+    setJokeSearchResponse,
+  ] = useState<GetJokesResponse | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -16,7 +17,7 @@ export const useJokeSearch = ({ category }: GetJokesParams) => {
         const r = await axios.get(
           JOKE_API_BASE_URL + "/joke/" + category + "?amount=10&safe-mode"
         );
-        isMounted && setJokesResponse(r.data);
+        isMounted && setJokeSearchResponse(r.data);
       } catch (err) {
         // TODO: Error handling
       }
@@ -27,5 +28,5 @@ export const useJokeSearch = ({ category }: GetJokesParams) => {
     };
   }, [category]);
 
-  return { response: jokesResponse };
+  return { jokeSearchResponse };
 };

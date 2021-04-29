@@ -38,3 +38,12 @@ export interface GetJokesResponse {
   amount: number;
   jokes: (SingleJoke | TwopartJoke)[];
 }
+
+export interface GetJokeInfoResponse {
+  // Only a partial response, unused fields have been omitted
+  error: boolean;
+  jokes: {
+    totalCount: number;
+    categories: string[];
+  };
+}

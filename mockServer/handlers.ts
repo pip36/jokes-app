@@ -1,6 +1,11 @@
 import { rest, RestRequest } from "msw";
-import { GetJokesResponse } from "../src/api/jokes/types";
-import { buildSingleJoke, buildTwopartJoke } from "./data/jokes";
+import { GetJokeInfoResponse, GetJokesResponse } from "../src/api/jokes/types";
+import {
+  buildSingleJoke,
+  buildTwopartJoke,
+  jokeCategories,
+  totalJokeCount,
+} from "./data/jokes";
 
 export const handlers = [
   rest.get<any, GetJokesResponse>(
@@ -31,6 +36,21 @@ export const handlers = [
                   delivery: "Funny delivery - " + i,
                 })
           ),
+        })
+      );
+    }
+  ),
+  rest.get<any, GetJokeInfoResponse>(
+    "https://v2.jokeapi.dev/info",
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          error: false as boolean,
+          jokes: {
+            totalCount: totalJokeCount,
+            categories: jokeCategories,
+          },
         })
       );
     }
