@@ -17,7 +17,12 @@ const JokeCard: React.FC<JokeCardProps> = ({ joke }) => {
         <Typography variant="body2" color="textSecondary" align="right">
           Category: {joke.category}
         </Typography>
-        <Typography variant="body2" color="textSecondary" align="right">
+        <Typography
+          variant="body2"
+          gutterBottom
+          color="textSecondary"
+          align="right"
+        >
           Type: {joke.type}
         </Typography>
         {isSingleJoke(joke) ? (

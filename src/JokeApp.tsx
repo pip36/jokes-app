@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography, Container } from "@material-ui/core";
 import { useContext } from "react";
 import { JokesContext } from "./api/jokes/JokesProvider";
 import JokeSearch from "./pages/jokes/components/JokeSearch";
@@ -9,11 +9,15 @@ const JokeApp = () => {
   if (!totalJokes) return null;
 
   return (
-    <div>
-      <Typography variant="h1">Joke App</Typography>
-      <Typography variant="h2">Now with {totalJokes} jokes!</Typography>
+    <Container maxWidth="sm">
+      <Typography align="center" variant="h1">
+        Joke App
+      </Typography>
+      <Typography align="center" variant="h3" component="h2">
+        Now with {totalJokes} jokes!
+      </Typography>
       <JokeSearch />
-    </div>
+    </Container>
   );
 };
 
