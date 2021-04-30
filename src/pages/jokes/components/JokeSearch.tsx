@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { JokesContext } from "../../../api/jokes/JokesProvider";
 import { NO_RESULTS_ERROR_CODE } from "../../../api/jokes/types";
 import { useJokeSearch } from "../../../api/jokes/useJokeSearch";
-import useDebounce from "../../../api/utils";
+import useDebounce from "../../../api/utils/useDebounce";
 import JokeCard from "./JokeCard";
 
 const JokeSearch = () => {
@@ -17,6 +17,10 @@ const JokeSearch = () => {
     contains: debouncedSearchTerm,
   });
 
+  const noJokesAvailable =
+    jokeSearchResponse?.error &&
+    jokeSearchResponse.code === NO_RESULTS_ERROR_CODE;
+
   return (
     <div>
       <Box paddingY={1}>
@@ -26,7 +30,6 @@ const JokeSearch = () => {
           label="Category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          variant="outlined"
           fullWidth
         >
           {categories.map((category) => (
@@ -44,18 +47,14 @@ const JokeSearch = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search for a joke..."
-          variant="outlined"
           fullWidth
         />
       </Box>
 
       <Box paddingY={1} data-testid="joke-results">
-        {jokeSearchResponse?.error &&
-          jokeSearchResponse.code === NO_RESULTS_ERROR_CODE && (
-            <Typography align="center">
-              Sorry! No matching jokes found
-            </Typography>
-          )}
+        {noJokesAvailable && (
+          <Typography align="center">Sorry! No matching jokes found</Typography>
+        )}
 
         {jokeSearchResponse?.jokes?.map((joke) => (
           <Box key={joke.id} paddingY={1}>

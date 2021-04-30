@@ -12,7 +12,7 @@ interface JokeCardProps {
 
 const JokeCard: React.FC<JokeCardProps> = ({ joke }) => {
   return (
-    <Card variant="outlined">
+    <Card>
       <CardContent>
         <Typography variant="body2" color="textSecondary" align="right">
           Category: {joke.category}

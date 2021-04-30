@@ -13,7 +13,7 @@ const JokeApp = () => {
       <Typography align="center" variant="h1">
         Joke App
       </Typography>
-      <Typography align="center" variant="h3" component="h2">
+      <Typography align="center" variant="h4" component="h2">
         Now with {totalJokes} jokes!
       </Typography>
       <JokeSearch />

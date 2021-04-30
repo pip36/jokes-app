@@ -4,6 +4,14 @@ let theme = createMuiTheme({
   typography: {
     htmlFontSize: 10,
   },
+  props: {
+    MuiTextField: {
+      variant: "outlined",
+    },
+    MuiCard: {
+      variant: "outlined",
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);
