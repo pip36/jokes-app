@@ -1,7 +1,8 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { nonExistingJokeText, totalJokeCount } from "../mockServer/data/jokes";
 import JokeApp from "./JokeApp";
+import { render } from "./testUtils";
 
 test("Displays main heading", async () => {
   render(<JokeApp />);

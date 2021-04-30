@@ -3,13 +3,17 @@ import { ThemeProvider } from "@material-ui/styles";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import JokeApp from "./JokeApp";
+import "./theme/global.css";
 import theme from "./theme";
+import JokesProvider from "./api/jokes/JokesProvider";
 
 ReactDOM.render(
   <StrictMode>
     <CssBaseline />
     <ThemeProvider theme={theme}>
-      <JokeApp />
+      <JokesProvider>
+        <JokeApp />
+      </JokesProvider>
     </ThemeProvider>
   </StrictMode>,
   document.getElementById("root")
